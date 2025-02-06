@@ -3,8 +3,8 @@ import { Equal, Expect } from "../helpers/type-utils";
 
 export const Link = <TAs extends ElementType>(
   props: {
-    as: TAs;
-  } & React.ComponentPropsWithoutRef<TAs>,
+    as?: TAs;
+  } & React.ComponentPropsWithoutRef<ElementType extends TAs ? "a" : TAs>
 ) => {
   const { as: Comp = "a", ...rest } = props;
   return <Comp {...rest}></Comp>;
@@ -66,7 +66,7 @@ const Example2 = () => {
 
 const Custom = (
   props: { thisIsRequired: boolean },
-  ref: React.ForwardedRef<HTMLAnchorElement>,
+  ref: React.ForwardedRef<HTMLAnchorElement>
 ) => {
   return <a ref={ref} />;
 };

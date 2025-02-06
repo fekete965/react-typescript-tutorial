@@ -7,7 +7,15 @@ import { Equal, Expect } from "../helpers/type-utils";
  *
  * If you pass a default value, it should NOT include undefined.
  */
-export function useStateAsObject<T>(initial: T) {
+
+type UseStateAsObjectReturn<T> = {
+  value: T;
+  set: React.Dispatch<React.SetStateAction<T>>;
+};
+
+export function useStateAsObject<T>(initial: T): UseStateAsObjectReturn<T>;
+export function useStateAsObject<T>(): UseStateAsObjectReturn<T | undefined>;
+export function useStateAsObject<T>(initial?: T) {
   const [value, set] = useState(initial);
 
   return {
@@ -28,7 +36,7 @@ type ExampleTests = [
       typeof notUndefined.set,
       React.Dispatch<React.SetStateAction<{ name: string }>>
     >
-  >,
+  >
 ];
 
 /**
@@ -43,5 +51,5 @@ type NumTests = [
       typeof hasUndefined.set,
       React.Dispatch<React.SetStateAction<number | undefined>>
     >
-  >,
+  >
 ];

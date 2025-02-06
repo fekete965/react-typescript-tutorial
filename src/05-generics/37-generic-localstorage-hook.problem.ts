@@ -14,12 +14,12 @@ import { Equal, Expect } from "../helpers/type-utils";
  *
  * 1. Figure out a way to make this work using generics.
  */
-export const useLocalStorage = (prefix: string) => {
+export const useLocalStorage = <TData>(prefix: string) => {
   return {
-    get: (key: string) => {
+    get: (key: string): TData | null => {
       return JSON.parse(window.localStorage.getItem(prefix + key) || "null");
     },
-    set: (key: string, value: any) => {
+    set: (key: string, value: TData) => {
       window.localStorage.setItem(prefix + key, JSON.stringify(value));
     },
   };
@@ -39,6 +39,6 @@ it("Should not let you set a value that is not the same type as the type argumen
   user.set(
     "something",
     // @ts-expect-error
-    {},
+    {}
   );
 });

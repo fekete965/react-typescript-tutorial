@@ -1,9 +1,16 @@
 import { Router, useRouter } from "fake-external-lib";
 
-export const withRouter = (Component: any) => {
-  const NewComponent = (props: any) => {
+type RouterType = {
+  push: (path: string) => void;
+};
+
+export const withRouter = <TOuterProps extends { router: RouterType }>(
+  Component: React.ComponentType<TOuterProps>
+): React.ComponentType<Omit<TOuterProps, "router">> => {
+  const NewComponent = (props: Omit<TOuterProps, "router">) => {
     const router = useRouter();
-    return <Component {...props} router={router} />;
+
+    return <Component {...(props as TOuterProps)} router={router} />;
   };
 
   NewComponent.displayName = `withRouter(${Component.displayName})`;

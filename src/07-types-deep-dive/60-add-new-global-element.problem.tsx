@@ -10,6 +10,17 @@
  * interface in the JSX namespace.
  */
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      something: {
+        id: string;
+        children?: React.ReactNode;
+      };
+    }
+  }
+}
+
 <>
   <something id="123"></something>
 

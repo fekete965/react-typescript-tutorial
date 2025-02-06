@@ -1,12 +1,12 @@
-type ModalProps =
+type ModalProps = (
   | {
       variant: "no-title";
     }
   | {
       variant: "title";
       title: string;
-    };
-
+    }
+) & { buttonColor: string };
 /**
  * 1. How do we add a `buttonColor` prop to the `ModalProps` type that is
  * _always_ required across different variants?
